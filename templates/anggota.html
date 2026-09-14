@@ -1,0 +1,48 @@
+{% extends 'layout.html' %}
+{% block content %}
+<h3>Kelola Anggota (Khusus Admin)</h3>
+
+<div class="card p-3 mb-4 shadow-sm">
+    <h5>Tambah Anggota Baru</h5>
+    <form method="POST">
+        <div class="row">
+            <div class="col-md-3 mb-2"><input type="text" name="username" placeholder="Username" class="form-control" required></div>
+            <div class="col-md-3 mb-2"><input type="password" name="password" placeholder="Password" class="form-control" required></div>
+            <div class="col-md-3 mb-2"><input type="text" name="nama" placeholder="Nama Lengkap" class="form-control" required></div>
+            <div class="col-md-2 mb-2">
+                <select name="role" class="form-select">
+                    <option value="Anggota">Anggota</option>
+                    <option value="Bendahara">Bendahara</option>
+                    <option value="Admin">Admin</option>
+                </select>
+            </div>
+            <div class="col-md-1"><button type="submit" class="btn btn-primary w-100">+</button></div>
+        </div>
+    </form>
+</div>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Username</th>
+            <th>Nama</th>
+            <th>Role</th>
+            <th>Aksi</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for u in users %}
+        <tr>
+            <td>{{ u[1] }}</td>
+            <td>{{ u[2] }}</td>
+            <td><strong>{{ u[3] }}</strong></td>
+            <td>
+                {% if u[1] != 'admin' %}
+                <a href="{{ url_for('hapus_anggota', id=u[0]) }}" class="btn btn-danger btn-sm" onclick="return confirm('Hapus anggota ini?')">Hapus</a>
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
