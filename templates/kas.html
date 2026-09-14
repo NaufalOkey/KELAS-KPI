@@ -1,0 +1,53 @@
+{% extends 'layout.html' %}
+{% block content %}
+<h3>Kas / Menabung Kelas</h3>
+
+{% if session['role'] in ['Admin', 'Bendahara'] %}
+<div class="card p-3 mb-4 shadow-sm">
+    <h5>Tambah Transaksi Kas</h5>
+    <form method="POST">
+        <div class="row">
+            <div class="col-md-3 mb-2">
+                <input type="date" name="tanggal" class="form-control" required>
+            </div>
+            <div class="col-md-3 mb-2">
+                <input type="text" name="keterangan" placeholder="Keterangan (misal: Kas Budi)" class="form-control" required>
+            </div>
+            <div class="col-md-2 mb-2">
+                <select name="jenis" class="form-select">
+                    <option value="Masuk">Uang Masuk / Setor</option>
+                    <option value="Keluar">Uang Keluar</option>
+                </select>
+            </div>
+            <div class="col-md-2 mb-2">
+                <input type="number" name="jumlah" placeholder="Jumlah (Rp)" class="form-control" required>
+            </div>
+            <div class="col-md-2">
+                <button type="submit" class="btn btn-success w-100">Simpan</button>
+            </div>
+        </div>
+    </form>
+</div>
+{% endif %}
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Tanggal</th>
+            <th>Keterangan</th>
+            <th>Jenis</th>
+            <th>Jumlah</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for k in data_kas %}
+        <tr>
+            <td>{{ k[1] }}</td>
+            <td>{{ k[2] }}</td>
+            <td><span class="badge {% if k[3] == 'Masuk' %}bg-success{% else %}bg-danger{% endif %}">{{ k[3] }}</span></td>
+            <td>Rp {{ "{:,}".format(k[4]) }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
