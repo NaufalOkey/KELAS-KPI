@@ -1,0 +1,14 @@
+{% extends 'layout.html' %}
+{% block content %}
+<h2>Selamat Datang, {{ session['nama'] }}!</h2>
+<p class="text-muted">Role Anda: <strong>{{ session['role'] }}</strong></p>
+
+<div class="row mt-4">
+    <div class="col-md-6">
+        <div class="card bg-success text-white p-3 mb-3 shadow">
+            <h4>Total Saldo Kas Kelas</h4>
+            <h2>Rp {{ "{:,}".format(saldo) }}</h2>
+        </div>
+    </div>
+</div>
+{% endblock %}
